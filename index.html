@@ -1,9 +1,11 @@
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Curtis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -24,17 +26,169 @@
             text-align: center;
         }
 
+        #cubeCanvas {
+            display: block;
+            margin: 0 auto 10px auto;
+            background: none;
+        }
+
         h1 {
             font-size: 4em;
             color: #2c3e50;
             font-weight: 300;
             letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            text-decoration: none;
+            color: #fff;
+            background: #2c3e50;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+        }
+
+        .btn:hover {
+            background: #357ab8;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(53, 122, 184, 0.18);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <canvas id="cubeCanvas" width="180" height="180"></canvas>
         <h1>David Curtis</h1>
+        <div class="buttons">
+            <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">Portfolio</a>
+            <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
+        </div>
     </div>
+
+    <script>
+        // Rotating Cube
+        const canvas = document.getElementById('cubeCanvas');
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(canvas.width, canvas.height);
+        renderer.setClearColor(0x000000, 0);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.1, 100);
+        camera.position.z = 6;
+
+        // Create a 3x3 grid of cubes
+        const group = new THREE.Group();
+        const cubeSize = 0.7;
+        const gap = 0.12;
+        const material = new THREE.MeshStandardMaterial({ color: 0x357ab8, metalness: 0.5, roughness: 0.3 });
+        // Store all cubes for color changes
+        const cubes = [];
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                for (let k = -1; k <= 1; k++) {
+                    const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize, 16, 16, 16);
+                    const cube = new THREE.Mesh(geometry, material.clone());
+                    cube.position.x = i * (cubeSize + gap);
+                    cube.position.y = j * (cubeSize + gap);
+                    cube.position.z = k * (cubeSize + gap);
+                    group.add(cube);
+                    cubes.push(cube);
+                }
+            }
+        }
+                // Snake effect: head is white, body fades to blue
+                // Hamiltonian path for 3x3x3 grid (snake never intersects itself)
+                const snakeLength = 7;
+                let snakeHead = 0;
+                // Generate path: zigzag through layers, rows, columns
+                const path = [];
+                for (let z = -1; z <= 1; z++) {
+                    for (let y = -1; y <= 1; y++) {
+                        if ((z + y) % 2 === 0) {
+                            for (let x = -1; x <= 1; x++) path.push([x, y, z]);
+                        } else {
+                            for (let x = 1; x >= -1; x--) path.push([x, y, z]);
+                        }
+                    }
+                }
+                // Map path to cube indices
+                function findCubeIndex(x, y, z) {
+                    for (let i = 0; i < cubes.length; i++) {
+                        if (
+                            Math.abs(cubes[i].position.x - x * (cubeSize + gap)) < 0.001 &&
+                            Math.abs(cubes[i].position.y - y * (cubeSize + gap)) < 0.001 &&
+                            Math.abs(cubes[i].position.z - z * (cubeSize + gap)) < 0.001
+                        ) return i;
+                    }
+                    return -1;
+                }
+                const snakePath = path.map(([x, y, z]) => findCubeIndex(x, y, z));
+
+                function lerpColor(a, b, t) {
+                    // a, b: hex colors, t: 0..1
+                    const ar = (a >> 16) & 0xff, ag = (a >> 8) & 0xff, ab = a & 0xff;
+                    const br = (b >> 16) & 0xff, bg = (b >> 8) & 0xff, bb = b & 0xff;
+                    const r = Math.round(ar + (br - ar) * t);
+                    const g = Math.round(ag + (bg - ag) * t);
+                    const b_ = Math.round(ab + (bb - ab) * t);
+                    return (r << 16) | (g << 8) | b_;
+                }
+
+                // Button hover color
+                let snakeColorA = 0xffffff; // always white
+                let snakeColorB = 0x357ab8; // blue
+
+                function updateSnake() {
+                    // Reset all to blue
+                    for (let i = 0; i < cubes.length; i++) {
+                        cubes[i].material.color.setHex(snakeColorB);
+                    }
+                    // Color snake
+                    for (let s = 0; s < snakeLength; s++) {
+                        let idx = (snakeHead - s + snakePath.length) % snakePath.length;
+                        let cubeIdx = snakePath[idx];
+                        let t = s / snakeLength;
+                        let color = lerpColor(snakeColorA, snakeColorB, t);
+                        cubes[cubeIdx].material.color.setHex(color);
+                    }
+                    snakeHead = (snakeHead + 1) % snakePath.length;
+                }
+
+                setInterval(updateSnake, 200);
+        group.position.set(0, 0, 0);
+        scene.add(group);
+
+        // Initial angle: 33deg upward (x-axis)
+        group.rotation.x = 33 * Math.PI / 180;
+
+        // Lighting
+        scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+        const light = new THREE.PointLight(0xffffff, 0.8);
+        light.position.set(3, 3, 3);
+        scene.add(light);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        dirLight.position.set(0, 0, 5);
+        scene.add(dirLight);
+
+        camera.lookAt(group.position);
+        function animate() {
+            requestAnimationFrame(animate);
+            group.rotation.y += 0.02;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
 </html>
