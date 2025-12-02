@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Curtis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stompy&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
@@ -14,7 +17,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Stompy', monospace;
             background: #f8f9fa;
             min-height: 100vh;
             display: flex;
@@ -37,6 +40,13 @@
             color: #2c3e50;
             font-weight: 300;
             letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-top: -20px;
             margin-bottom: 30px;
         }
 
@@ -71,6 +81,7 @@
     <div class="container">
         <canvas id="cubeCanvas" width="180" height="180"></canvas>
         <h1>David Curtis</h1>
+        <p class="tagline">3D Hard Surface Artist and I create tools for fun</p>
         <div class="buttons">
             <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">Portfolio</a>
             <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
