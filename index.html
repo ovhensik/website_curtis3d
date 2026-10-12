@@ -36,6 +36,8 @@
             display: block;
             width: min(320px, 61vw);
             height: auto;
+            aspect-ratio: 1080 / 1520;
+            object-fit: contain;
             margin: 0 auto 10px;
             mix-blend-mode: lighten;
             transform: translateY(-110px) scale(1.4);
@@ -44,6 +46,7 @@
 
         h1 {
             font-size: 4em;
+            line-height: 1.2;
             color: #f8f9fa;
             font-weight: 300;
             letter-spacing: 2px;
@@ -52,6 +55,7 @@
 
         .tagline {
             font-size: 1.2em;
+            line-height: 1.2;
             color: #bdc3c7;
             margin-top: -20px;
             margin-bottom: 30px;
@@ -67,6 +71,7 @@
         .btn {
             padding: 12px 30px;
             font-size: 1.1em;
+            line-height: 1.2;
             text-decoration: none;
             color: #000cfd;
             background: #fff;
@@ -86,7 +91,7 @@
 </head>
 <body>
     <div class="container">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
             <source src="hero-video.mp4" type="video/mp4">
         </video>
         <div class="intro">
