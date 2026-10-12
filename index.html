@@ -33,22 +33,13 @@
             transform: translateY(-20px);
         }
 
-        .hero-videos {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            align-items: center;
-            justify-items: center;
-            gap: clamp(8px, 2vw, 32px);
-            width: 100%;
-            margin: 0 auto 10px;
-        }
-
         .hero-video {
             display: block;
-            width: min(240px, 22.222vh, 20vw, 100%);
+            width: min(240px, 22.222vh, 61vw, 100%);
             height: auto;
             aspect-ratio: 1080 / 1520;
             object-fit: contain;
+            margin: 0 auto 10px;
             mix-blend-mode: lighten;
             transform: translateY(-7.6389vh) scale(1.4);
             transform-origin: center bottom;
@@ -99,15 +90,6 @@
         }
 
         @media (max-width: 700px) {
-            .hero-videos {
-                gap: 8px;
-            }
-
-            .hero-video {
-                width: min(320px, 28vw);
-                transform: translateY(-110px);
-            }
-
             h1 {
                 font-size: clamp(2.5rem, 13.5vw, 4em);
             }
@@ -125,17 +107,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="hero-videos">
-            <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-                <source src="hero-video.mp4" type="video/mp4">
-            </video>
-            <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-                <source src="hero-video.mp4" type="video/mp4">
-            </video>
-            <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-                <source src="hero-video.mp4" type="video/mp4">
-            </video>
-        </div>
+        <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+            <source src="hero-video.mp4" type="video/mp4">
+        </video>
         <div class="intro">
             <h1>David Curtis</h1>
             <p class="tagline">3D Hard Surface Artist and I create tools for fun</p>
