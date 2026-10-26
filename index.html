@@ -15,9 +15,13 @@
             box-sizing: border-box;
         }
 
+        html {
+            background: #0054FE;
+        }
+
         body {
             font-family: 'Stompy', monospace;
-            background: #000eff;
+            background: #0054FE;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -35,14 +39,13 @@
 
         .hero-video {
             display: block;
-            width: min(240px, 22.222vh, 61vw, 100%);
+            width: min(1344px, 95vw, 100%);
             height: auto;
-            aspect-ratio: 1080 / 1520;
+            aspect-ratio: 2882 / 1624;
             object-fit: contain;
-            margin: 0 auto 10px;
-            filter: url(#dolphin-blue-key);
-            transform: translateY(-7.6389vh) scale(1.4);
-            transform-origin: center bottom;
+            margin: 0 auto 42px;
+            filter: url(#video-blue-key);
+            clip-path: inset(0 3px 3px 0);
         }
 
         .svg-defs {
@@ -90,10 +93,41 @@
         }
 
         .btn:hover {
-            background: #fff;
+            background: #f5f7ff;
             color: #000eff;
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-height: 1000px) and (min-width: 701px) {
+            .hero-video {
+                width: min(1200px, 95vw, 100%);
+                transform: translateY(-40px);
+            }
+
+            .intro {
+                margin-top: -100px;
+                position: relative;
+                z-index: 1;
+            }
+
+            h1 {
+                margin-bottom: 18px;
+            }
+
+            .tagline {
+                margin-bottom: 18px;
+            }
+
+            .buttons {
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-height: 740px) and (min-width: 701px) {
+            .hero-video {
+                width: min(1128px, 95vw, 100%);
+            }
         }
 
         @media (max-width: 700px) {
@@ -116,17 +150,17 @@
     <div class="container">
         <svg class="svg-defs" aria-hidden="true">
             <defs>
-                <filter id="dolphin-blue-key" color-interpolation-filters="sRGB">
-                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 1 0" />
+                <filter id="video-blue-key" color-interpolation-filters="sRGB">
+                    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 8 0 0 0 -0.2" />
                 </filter>
             </defs>
         </svg>
-        <video class="hero-video" width="1080" height="1520" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <video class="hero-video" width="2882" height="1624" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
             <source src="hero-video.mp4" type="video/mp4">
         </video>
         <div class="intro">
             <h1>David Curtis</h1>
-            <p class="tagline">3D Hard Surface Artist and I create tools for fun</p>
+            <p class="tagline">3D Hard Surface Artist and I create technical tools</p>
             <div class="buttons">
                 <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">Portfolio</a>
                 <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
