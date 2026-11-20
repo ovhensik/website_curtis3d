@@ -25,34 +25,34 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .container {
             text-align: center;
             width: min(100%, 1600px);
+            padding-top: 40px;
         }
 
-        .intro {
-            transform: translateY(-20px);
-        }
-
-        .hero-video {
+        .project-video {
             display: block;
-            width: min(1344px, 95vw, 50vh);
+            width: min(1280px, 95vw);
             height: auto;
-            aspect-ratio: 1428 / 1432;
-            object-fit: contain;
-            margin: 0 auto 42px;
-            filter: url(#video-blue-key);
-            clip-path: inset(0 3px 3px 0);
+            margin: 72px auto 18px;
         }
 
-        .svg-defs {
-            position: absolute;
-            width: 0;
-            height: 0;
-            overflow: hidden;
+        @media (max-height: 1080px) and (min-width: 701px) {
+            .project-video {
+                width: min(1280px, 95vw, 110vh);
+            }
+        }
+
+        .project-caption {
+            color: #bdc3c7;
+            font-size: 1em;
+            line-height: 1.2;
+            margin: 0 auto 42px;
+            padding: 0 12px;
         }
 
         h1 {
@@ -100,17 +100,6 @@
         }
 
         @media (max-height: 1000px) and (min-width: 701px) {
-            .hero-video {
-                width: min(1200px, 95vw, 50vh);
-                transform: translateY(-40px);
-            }
-
-            .intro {
-                margin-top: -100px;
-                position: relative;
-                z-index: 1;
-            }
-
             h1 {
                 margin-bottom: 18px;
             }
@@ -121,12 +110,6 @@
 
             .buttons {
                 margin-top: 15px;
-            }
-        }
-
-        @media (max-height: 740px) and (min-width: 701px) {
-            .hero-video {
-                width: min(1128px, 95vw, 50vh);
             }
         }
 
@@ -148,25 +131,19 @@
 </head>
 <body>
     <div class="container">
-        <svg class="svg-defs" aria-hidden="true">
-            <defs>
-                <filter id="video-blue-key" color-interpolation-filters="sRGB">
-                    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 8 0 0 0 -1.2" />
-                </filter>
-            </defs>
-        </svg>
-        <video class="hero-video" width="1428" height="1432" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-            <source src="hero-video.mp4" type="video/mp4">
-        </video>
         <div class="intro">
             <h1>David Curtis</h1>
-            <p class="tagline">3D Hard Surface Artist and I create technical tools</p>
+            <p class="tagline">3D Hard Surface Artist. I create technical tools.<br>AI video generation and editing</p>
             <div class="buttons">
                 <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">Portfolio</a>
                 <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
                 <a href="David_Curtis_Resume.pdf" class="btn">Resume</a>
             </div>
         </div>
+        <video class="project-video" width="1280" height="704" autoplay muted loop playsinline controls preload="metadata">
+            <source src="ferrari-video.mp4" type="video/mp4">
+        </video>
+        <p class="project-caption">AI prompted with LTX 2.5 local model in ComfyUI and edited in FilmCraft</p>
     </div>
 </body>
 </html>
