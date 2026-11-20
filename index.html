@@ -39,9 +39,9 @@
 
         .hero-video {
             display: block;
-            width: min(1344px, 95vw, 100%);
+            width: min(1344px, 95vw, 50vh);
             height: auto;
-            aspect-ratio: 2882 / 1624;
+            aspect-ratio: 1428 / 1432;
             object-fit: contain;
             margin: 0 auto 42px;
             filter: url(#video-blue-key);
@@ -101,7 +101,7 @@
 
         @media (max-height: 1000px) and (min-width: 701px) {
             .hero-video {
-                width: min(1200px, 95vw, 100%);
+                width: min(1200px, 95vw, 50vh);
                 transform: translateY(-40px);
             }
 
@@ -126,7 +126,7 @@
 
         @media (max-height: 740px) and (min-width: 701px) {
             .hero-video {
-                width: min(1128px, 95vw, 100%);
+                width: min(1128px, 95vw, 50vh);
             }
         }
 
@@ -151,11 +151,11 @@
         <svg class="svg-defs" aria-hidden="true">
             <defs>
                 <filter id="video-blue-key" color-interpolation-filters="sRGB">
-                    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 8 0 0 0 -0.2" />
+                    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 8 0 0 0 -1.2" />
                 </filter>
             </defs>
         </svg>
-        <video class="hero-video" width="2882" height="1624" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <video class="hero-video" width="1428" height="1432" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
             <source src="hero-video.mp4" type="video/mp4">
         </video>
         <div class="intro">
