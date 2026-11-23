@@ -22,21 +22,62 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Stompy', monospace;
             background: transparent;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
         }
 
         .container {
             text-align: center;
             width: min(100%, 1600px);
-            padding-top: 40px;
+            margin: 0 auto;
+        }
+
+        .page-section {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 0;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .page-indicators {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(-50%);
+        }
+
+        .page-indicator {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(248, 249, 250, 0.35);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .page-indicator[aria-current="page"] {
+            background: #f8f9fa;
+            transform: scale(1.25);
+        }
+
+        .page-indicator:focus-visible {
+            outline: 2px solid #f8f9fa;
+            outline-offset: 4px;
         }
 
         .project-video {
@@ -51,7 +92,7 @@
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 16px;
             width: min(1280px, 95vw);
-            margin: 0 auto 42px;
+            margin: 0 auto;
             align-items: start;
         }
 
@@ -69,6 +110,8 @@
             display: block;
             width: 100%;
             height: auto;
+            max-height: 58vh;
+            object-fit: contain;
         }
 
         .image-dialog {
@@ -109,7 +152,7 @@
             color: #f8f9fa;
             font-size: 2em;
             line-height: 1.2;
-            margin: 72px auto 16px;
+            margin: 0 auto 16px;
         }
 
         @media (max-height: 1080px) and (min-width: 701px) {
@@ -122,7 +165,7 @@
             color: #bdc3c7;
             font-size: 1em;
             line-height: 1.2;
-            margin: 0 auto 42px;
+            margin: 0 auto;
             padding: 0 12px;
         }
 
@@ -190,8 +233,7 @@
             }
 
             .clothing-gallery {
-                grid-template-columns: 1fr;
-                width: min(100%, 520px);
+                gap: 8px;
             }
 
             .buttons {
@@ -206,22 +248,26 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="intro">
-            <h1>David Curtis</h1>
-            <p class="tagline">3D Hard Surface Artist. I create technical tools.<br>Design and AI-Assisted Product Visualization</p>
-            <div class="buttons">
-                <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">3D Portfolio</a>
-                <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
-                <a href="David_Curtis_Resume.pdf" class="btn">Resume</a>
+    <main class="container">
+        <section id="intro-section" class="page-section intro-section">
+            <div class="intro">
+                <h1>David Curtis</h1>
+                <p class="tagline">3D Hard Surface Artist. I create technical tools.<br>Design and AI-Assisted Product Visualization</p>
+                <div class="buttons">
+                    <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">3D Portfolio</a>
+                    <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
+                    <a href="David_Curtis_Resume.pdf" class="btn">Resume</a>
+                </div>
             </div>
-        </div>
-        <h2 class="project-title">Product Visualization</h2>
-        <video class="project-video" width="1280" height="704" autoplay muted loop playsinline controls preload="metadata">
-            <source src="ferrari-video.mp4" type="video/mp4">
-        </video>
-        <p class="project-caption">AI prompted with LTX 2.5 local model in ComfyUI and edited in FilmCraft</p>
-        <section aria-labelledby="clothing-title">
+        </section>
+        <section id="product-section" class="page-section product-section" aria-labelledby="product-title">
+            <h2 id="product-title" class="project-title">Product Visualization</h2>
+            <video class="project-video" width="1280" height="704" autoplay muted loop playsinline controls preload="metadata">
+                <source src="ferrari-video.mp4" type="video/mp4">
+            </video>
+            <p class="project-caption">AI prompted with LTX 2.5 local model in ComfyUI and edited in FilmCraft</p>
+        </section>
+        <section id="clothing-section" class="page-section clothing-section" aria-labelledby="clothing-title">
             <h2 id="clothing-title" class="project-title">Clothing</h2>
             <div class="clothing-gallery">
                 <button class="clothing-image-button" type="button">
@@ -235,7 +281,12 @@
                 </video>
             </div>
         </section>
-    </div>
+    </main>
+    <nav class="page-indicators" aria-label="Page navigation">
+        <a class="page-indicator" href="#intro-section" aria-label="Introduction" aria-current="page"></a>
+        <a class="page-indicator" href="#product-section" aria-label="Product Visualization"></a>
+        <a class="page-indicator" href="#clothing-section" aria-label="Clothing"></a>
+    </nav>
     <dialog class="image-dialog" aria-label="Enlarged clothing image">
         <button class="image-dialog-close" type="button">Close</button>
         <img alt="">
@@ -261,6 +312,29 @@
             if (event.target === imageDialog) {
                 imageDialog.close();
             }
+        });
+
+        const pageIndicators = document.querySelectorAll('.page-indicator');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            const currentSection = entries
+                .filter((entry) => entry.isIntersecting)
+                .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+            if (!currentSection) {
+                return;
+            }
+
+            pageIndicators.forEach((indicator) => {
+                if (indicator.hash === `#${currentSection.target.id}`) {
+                    indicator.setAttribute('aria-current', 'page');
+                } else {
+                    indicator.removeAttribute('aria-current');
+                }
+            });
+        }, { threshold: [0.5, 0.75, 1] });
+
+        document.querySelectorAll('.page-section').forEach((section) => {
+            sectionObserver.observe(section);
         });
     </script>
 </body>
