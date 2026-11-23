@@ -41,6 +41,65 @@
             margin: 0 auto 18px;
         }
 
+        .clothing-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            width: min(1280px, 95vw);
+            margin: 0 auto 42px;
+            align-items: start;
+        }
+
+        .clothing-image-button {
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: none;
+            cursor: zoom-in;
+        }
+
+        .clothing-gallery img,
+        .clothing-gallery video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .image-dialog {
+            width: fit-content;
+            max-width: 90vw;
+            max-height: 90vh;
+            margin: auto;
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+
+        .image-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        .image-dialog img {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            margin: auto;
+            object-fit: contain;
+        }
+
+        .image-dialog-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 8px 12px;
+            border: 0;
+            color: #fff;
+            background: #0054FE;
+            font: inherit;
+            cursor: pointer;
+        }
+
         .project-title {
             color: #f8f9fa;
             font-size: 2em;
@@ -125,6 +184,11 @@
                 font-size: clamp(2.5rem, 13.5vw, 4em);
             }
 
+            .clothing-gallery {
+                grid-template-columns: 1fr;
+                width: min(100%, 520px);
+            }
+
             .buttons {
                 gap: 8px;
             }
@@ -140,7 +204,7 @@
     <div class="container">
         <div class="intro">
             <h1>David Curtis</h1>
-            <p class="tagline">3D Hard Surface Artist. I create technical tools.<br>AI video generation and editing</p>
+            <p class="tagline">3D Hard Surface Artist. I create technical tools.<br>Design and AI-Assisted Product Visualization</p>
             <div class="buttons">
                 <a href="https://www.artstation.com/davidcurtis/" target="_blank" class="btn">3D Portfolio</a>
                 <a href="https://github.com/ovhensik" target="_blank" class="btn">Github</a>
@@ -152,6 +216,47 @@
             <source src="ferrari-video.mp4" type="video/mp4">
         </video>
         <p class="project-caption">AI prompted with LTX 2.5 local model in ComfyUI and edited in FilmCraft</p>
+        <section aria-labelledby="clothing-title">
+            <h2 id="clothing-title" class="project-title">Clothing</h2>
+            <div class="clothing-gallery">
+                <button class="clothing-image-button" type="button">
+                    <img src="jacket_02.png" alt="Blue and navy jacket displayed on a hanger">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="jacket_01.png" alt="Close-up of the jacket's collar and patterned blue fabric">
+                </button>
+                <video autoplay muted loop controls playsinline preload="metadata">
+                    <source src="jacket_video_01.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
     </div>
+    <dialog class="image-dialog" aria-label="Enlarged clothing image">
+        <button class="image-dialog-close" type="button">Close</button>
+        <img alt="">
+    </dialog>
+    <script>
+        const imageDialog = document.querySelector('.image-dialog');
+        const enlargedImage = imageDialog.querySelector('img');
+
+        document.querySelectorAll('.clothing-image-button').forEach((button) => {
+            button.addEventListener('click', () => {
+                const image = button.querySelector('img');
+                enlargedImage.src = image.src;
+                enlargedImage.alt = image.alt;
+                imageDialog.showModal();
+            });
+        });
+
+        imageDialog.querySelector('.image-dialog-close').addEventListener('click', () => {
+            imageDialog.close();
+        });
+
+        imageDialog.addEventListener('click', (event) => {
+            if (event.target === imageDialog) {
+                imageDialog.close();
+            }
+        });
+    </script>
 </body>
 </html>
