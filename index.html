@@ -114,6 +114,14 @@
             align-items: start;
         }
 
+        .igaming-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            width: min(1280px, 95vw);
+            align-items: center;
+        }
+
         .clothing-image-button {
             display: block;
             width: 100%;
@@ -129,6 +137,13 @@
             width: 100%;
             height: auto;
             max-height: 58vh;
+            object-fit: contain;
+        }
+
+        .igaming-gallery img {
+            display: block;
+            width: 100%;
+            height: min(28vh, 280px);
             object-fit: contain;
         }
 
@@ -254,6 +269,15 @@
                 gap: 8px;
             }
 
+            .igaming-gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .igaming-gallery img {
+                height: min(15vh, 128px);
+            }
+
             .buttons {
                 gap: 8px;
             }
@@ -325,6 +349,33 @@
                 </video>
             </div>
         </section>
+        <section id="igaming-section" class="page-section igaming-section" aria-labelledby="icons-title">
+            <h2 id="icons-title" class="project-title">Icons</h2>
+            <div class="igaming-gallery">
+                <button class="clothing-image-button" type="button">
+                    <img src="High_Value_Amulet.png" alt="High-value amulet icon with a jeweled red heart and bat wings">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Low_Value_Coffin.png" alt="Low-value coffin icon with a silver cross">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Low_Value_Lips.png" alt="Low-value red vampire lips icon">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Low_Value_Winged_Black_Heart.png" alt="Low-value black heart with metallic bat wings">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Mid_Value_Dagger.png" alt="Mid-value jeweled dagger icon">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Mid_Value_Ring.png" alt="Mid-value silver ring with a red gemstone">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Royals.png" alt="Stylized royal playing-card letters A, K, Q, and J">
+                </button>
+            </div>
+            <p class="project-caption">A collection of custom <strong>Gothic-themed reel symbols</strong> designed for a dark iGaming slot machine</p>
+        </section>
     </main>
     <nav class="page-indicators" aria-label="Page navigation">
         <a class="page-indicator" href="#intro-section" aria-label="Introduction" aria-current="page"></a>
@@ -332,8 +383,9 @@
         <a class="page-indicator" href="#jacket-section" aria-label="Jacket"></a>
         <a class="page-indicator" href="#red-jacket-section" aria-label="Red jacket project"></a>
         <a class="page-indicator" href="#clothing-section" aria-label="Clothing"></a>
+        <a class="page-indicator" href="#igaming-section" aria-label="Icons"></a>
     </nav>
-    <dialog class="image-dialog" aria-label="Enlarged clothing image">
+    <dialog class="image-dialog" aria-label="Enlarged project image">
         <button class="image-dialog-close" type="button">Close</button>
         <img alt="">
     </dialog>
