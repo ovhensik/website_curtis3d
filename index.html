@@ -371,6 +371,43 @@
                 font-size: clamp(0.8rem, 4vw, 1.1em);
             }
         }
+
+        @media (min-width: 3200px) and (min-height: 1200px),
+               (min-resolution: 2dppx) and (min-width: 1800px) and (min-height: 1000px) {
+            .container {
+                width: min(100%, 4200px);
+            }
+
+            .project-video {
+                width: min(3000px, 90vw, 140vh);
+            }
+
+            .clothing-gallery,
+            .igaming-gallery {
+                width: min(3200px, 90vw);
+            }
+
+            .clothing-gallery img,
+            .clothing-gallery video {
+                max-height: min(68vh, 1300px);
+            }
+
+            .apparel-image-button {
+                height: min(68vh, 1300px);
+            }
+
+            .commercial-beauty-gallery {
+                width: min(2700px, 90vw);
+            }
+
+            .commercial-beauty-gallery img {
+                height: min(72vh, 1350px);
+            }
+
+            .igaming-gallery img {
+                height: min(31vh, 480px);
+            }
+        }
     </style>
 </head>
 <body>
