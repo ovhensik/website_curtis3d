@@ -155,6 +155,25 @@
             object-fit: contain;
         }
 
+        .apparel-image-button {
+            position: relative;
+            height: min(58vh, 620px);
+            overflow: hidden;
+        }
+
+        .apparel-image-button img {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            max-height: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .apparel-image-button img.is-active {
+            opacity: 1;
+        }
+
         .igaming-gallery img {
             display: block;
             width: 100%;
@@ -300,6 +319,20 @@
                 gap: 8px;
             }
 
+            .apparel-gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .apparel-image-button {
+                height: min(34vh, 260px);
+            }
+
+            .apparel-gallery .apparel-video {
+                grid-column: 1 / -1;
+                max-height: min(30vh, 230px);
+            }
+
             .commercial-beauty-gallery {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 8px;
@@ -371,41 +404,19 @@
         <section id="jacket-section" class="page-section clothing-section" aria-labelledby="clothing-title">
             <h2 id="clothing-title" class="project-title">Fashion &amp; Apparel</h2>
             <p class="project-caption clothing-caption">AI-assisted apparel design and 360-degree motion showcases highlighting original garment construction, custom detailing, and fit.</p>
-            <div class="clothing-gallery">
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_neon_01_v3.png" alt="Black jacket with neon-green piping displayed on a hanger">
+            <div class="clothing-gallery apparel-gallery">
+                <button class="clothing-image-button apparel-image-button" type="button">
+                    <img class="is-active" src="jacket_neon_01_v3.png" alt="Black jacket with neon-green piping displayed on a hanger">
+                    <img src="jacket_red_01.png" alt="Close-up of the white jacket with glossy red panels and a grid-pattern collar" aria-hidden="true">
+                    <img src="jacket_01_colored.png" alt="Close-up of the blue jacket's collar and patterned fabric" aria-hidden="true">
                 </button>
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_neon_02_v3.png" alt="Black jacket with neon-green piping shown at an angle">
+                <button class="clothing-image-button apparel-image-button" type="button">
+                    <img class="is-active" src="jacket_neon_02_v3.png" alt="Black jacket with neon-green piping shown at an angle">
+                    <img src="jacket_red_02.png" alt="Red and white jacket displayed on a hanger" aria-hidden="true">
+                    <img src="jacket_02_colored.png" alt="Blue and navy jacket displayed on a hanger" aria-hidden="true">
                 </button>
-                <video autoplay muted loop controls playsinline preload="metadata" aria-label="Black and neon-green jacket video">
+                <video class="apparel-video" muted controls playsinline preload="metadata" aria-label="Black and neon-green jacket video">
                     <source src="jacket_neon_video.mp4" type="video/mp4">
-                </video>
-            </div>
-        </section>
-        <section id="red-jacket-section" class="page-section clothing-section" aria-label="Red jacket project">
-            <div class="clothing-gallery">
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_red_01.png" alt="Close-up of the white jacket with glossy red panels and a grid-pattern collar">
-                </button>
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_red_02.png" alt="Red and white jacket displayed on a hanger">
-                </button>
-                <video autoplay muted loop controls playsinline preload="metadata" aria-label="Red and white jacket video">
-                    <source src="jacket_red_video.mp4" type="video/mp4">
-                </video>
-            </div>
-        </section>
-        <section id="clothing-section" class="page-section clothing-section" aria-label="Blue jacket project">
-            <div class="clothing-gallery">
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_01_colored.png" alt="Close-up of the blue jacket's collar and patterned fabric">
-                </button>
-                <button class="clothing-image-button" type="button">
-                    <img src="jacket_02_colored.png" alt="Blue and navy jacket displayed on a hanger">
-                </button>
-                <video autoplay muted loop controls playsinline preload="metadata">
-                    <source src="jacket_video_01.mp4" type="video/mp4">
                 </video>
             </div>
         </section>
@@ -441,9 +452,7 @@
         <a class="page-indicator" href="#intro-section" aria-label="Introduction" aria-current="page"></a>
         <a class="page-indicator" href="#commercial-beauty-section" aria-label="Commercial Beauty"></a>
         <a class="page-indicator" href="#product-section" aria-label="Product Visualization"></a>
-        <a class="page-indicator" href="#jacket-section" aria-label="Jacket"></a>
-        <a class="page-indicator" href="#red-jacket-section" aria-label="Red jacket project"></a>
-        <a class="page-indicator" href="#clothing-section" aria-label="Fashion &amp; Apparel"></a>
+        <a class="page-indicator" href="#jacket-section" aria-label="Fashion &amp; Apparel"></a>
         <a class="page-indicator" href="#igaming-section" aria-label="Gaming &amp; UI"></a>
     </nav>
     <dialog class="image-dialog" aria-label="Enlarged project image">
@@ -456,12 +465,60 @@
 
         document.querySelectorAll('.clothing-image-button').forEach((button) => {
             button.addEventListener('click', () => {
-                const image = button.querySelector('img');
+                const image = button.querySelector('img.is-active') || button.querySelector('img');
                 enlargedImage.src = image.src;
                 enlargedImage.alt = image.alt;
                 imageDialog.showModal();
             });
         });
+
+        const apparelVideo = document.querySelector('.apparel-video');
+        if (apparelVideo) {
+            const apparelLooks = [
+                { video: 'jacket_neon_video.mp4', label: 'Black and neon-green jacket video' },
+                { video: 'jacket_red_video.mp4', label: 'Red and white jacket video' },
+                { video: 'jacket_video_01.mp4', label: 'Blue and navy jacket video' }
+            ];
+            let activeApparelLook = 0;
+            const playApparelVideo = () => {
+                const playback = apparelVideo.play();
+                if (playback) {
+                    playback.catch((error) => {
+                        console.error(`Unable to play ${apparelVideo.getAttribute('aria-label')}.`, error);
+                    });
+                }
+            };
+
+            apparelVideo.addEventListener('ended', () => {
+                activeApparelLook = (activeApparelLook + 1) % apparelLooks.length;
+                document.querySelectorAll('.apparel-image-button').forEach((button) => {
+                    button.querySelectorAll('img').forEach((image, index) => {
+                        const isActive = index === activeApparelLook;
+                        image.classList.toggle('is-active', isActive);
+                        if (isActive) {
+                            image.removeAttribute('aria-hidden');
+                        } else {
+                            image.setAttribute('aria-hidden', 'true');
+                        }
+                    });
+                });
+
+                const nextLook = apparelLooks[activeApparelLook];
+                apparelVideo.setAttribute('aria-label', nextLook.label);
+                apparelVideo.src = nextLook.video;
+                apparelVideo.load();
+                playApparelVideo();
+            });
+
+            const apparelSectionObserver = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    playApparelVideo();
+                } else {
+                    apparelVideo.pause();
+                }
+            }, { threshold: 0.5 });
+            apparelSectionObserver.observe(document.querySelector('#jacket-section'));
+        }
 
         imageDialog.querySelector('.image-dialog-close').addEventListener('click', () => {
             imageDialog.close();
