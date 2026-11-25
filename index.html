@@ -166,12 +166,19 @@
             inset: 0;
             height: 100%;
             max-height: none;
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            transform: translateY(100%);
+            visibility: hidden;
+            transition: transform 0.7s ease;
         }
 
         .apparel-image-button img.is-active {
-            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .apparel-image-button img.is-leaving {
+            transform: translateY(-100%);
+            visibility: visible;
         }
 
         .igaming-gallery img {
@@ -492,15 +499,16 @@
             apparelVideo.addEventListener('ended', () => {
                 activeApparelLook = (activeApparelLook + 1) % apparelLooks.length;
                 document.querySelectorAll('.apparel-image-button').forEach((button) => {
-                    button.querySelectorAll('img').forEach((image, index) => {
-                        const isActive = index === activeApparelLook;
-                        image.classList.toggle('is-active', isActive);
-                        if (isActive) {
-                            image.removeAttribute('aria-hidden');
-                        } else {
-                            image.setAttribute('aria-hidden', 'true');
-                        }
-                    });
+                    const outgoingImage = button.querySelector('img.is-active');
+                    const incomingImage = button.querySelectorAll('img')[activeApparelLook];
+                    outgoingImage.classList.remove('is-active');
+                    outgoingImage.classList.add('is-leaving');
+                    outgoingImage.setAttribute('aria-hidden', 'true');
+                    incomingImage.classList.add('is-active');
+                    incomingImage.removeAttribute('aria-hidden');
+                    incomingImage.addEventListener('transitionend', () => {
+                        outgoingImage.classList.remove('is-leaving');
+                    }, { once: true });
                 });
 
                 const nextLook = apparelLooks[activeApparelLook];
