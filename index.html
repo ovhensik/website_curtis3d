@@ -114,6 +114,21 @@
             align-items: start;
         }
 
+        .commercial-beauty-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            width: min(1100px, 95vw);
+            align-items: center;
+        }
+
+        .commercial-beauty-gallery img {
+            display: block;
+            width: 100%;
+            height: min(68vh, 760px);
+            object-fit: contain;
+        }
+
         .igaming-gallery {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -202,8 +217,20 @@
             padding: 0 12px;
         }
 
+        .product-section .project-caption {
+            margin-bottom: 18px;
+        }
+
         .clothing-caption {
-            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+
+        .igaming-section .project-caption {
+            margin-bottom: 18px;
+        }
+
+        .commercial-beauty-caption {
+            margin-bottom: 18px;
         }
 
         h1 {
@@ -273,6 +300,19 @@
                 gap: 8px;
             }
 
+            .commercial-beauty-gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .commercial-beauty-gallery .clothing-image-button:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+            }
+
+            .commercial-beauty-gallery img {
+                height: min(34vh, 300px);
+            }
+
             .igaming-gallery {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 8px;
@@ -306,15 +346,31 @@
                 </div>
             </div>
         </section>
+        <section id="commercial-beauty-section" class="page-section commercial-beauty-section" aria-labelledby="commercial-beauty-title">
+            <h2 id="commercial-beauty-title" class="project-title">Commercial Beauty</h2>
+            <p class="project-caption commercial-beauty-caption">AI-assisted beauty and fragrance product concepts</p>
+            <div class="commercial-beauty-gallery">
+                <button class="clothing-image-button" type="button">
+                    <img src="Krea2_turbo_00040_.png" alt="Glass perfume bottle with a sculpted stopper among pink roses">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Krea2_turbo_00048_.png" alt="Pearlescent perfume bottle on a dark reflective surface with flower petals">
+                </button>
+                <button class="clothing-image-button" type="button">
+                    <img src="Krea2_turbo_00043_.png" alt="Minimalist perfume bottle on a stone pedestal with flowing fabric">
+                </button>
+            </div>
+        </section>
         <section id="product-section" class="page-section product-section" aria-labelledby="product-title">
             <h2 id="product-title" class="project-title">Product Visualization</h2>
+            <p class="project-caption">High-energy automotive commercial crafted completely by sequencing and editing AI-assisted vehicle shots into a cohesive narrative</p>
             <video class="project-video" width="1280" height="704" autoplay muted loop playsinline controls preload="metadata">
                 <source src="ferrari-video.mp4" type="video/mp4">
             </video>
-            <p class="project-caption">AI prompted with LTX 2.5 local model in ComfyUI and edited in FilmCraft</p>
         </section>
         <section id="jacket-section" class="page-section clothing-section" aria-labelledby="clothing-title">
-            <h2 id="clothing-title" class="project-title">Clothing</h2>
+            <h2 id="clothing-title" class="project-title">Fashion &amp; Apparel</h2>
+            <p class="project-caption clothing-caption">AI-assisted apparel design and 360-degree motion showcases highlighting original garment construction, custom detailing, and fit.</p>
             <div class="clothing-gallery">
                 <button class="clothing-image-button" type="button">
                     <img src="jacket_neon_02_v2.png" alt="Black jacket with neon-green piping shown at an angle">
@@ -326,7 +382,6 @@
                     <source src="jacket_neon_video.mp4" type="video/mp4">
                 </video>
             </div>
-            <p class="project-caption clothing-caption">Created with custom ComfyUI workflows and the assistance of local image and video models</p>
         </section>
         <section id="red-jacket-section" class="page-section clothing-section" aria-label="Red jacket project">
             <div class="clothing-gallery">
@@ -355,7 +410,8 @@
             </div>
         </section>
         <section id="igaming-section" class="page-section igaming-section" aria-labelledby="icons-title">
-            <h2 id="icons-title" class="project-title">Icons</h2>
+            <h2 id="icons-title" class="project-title">Gaming &amp; UI</h2>
+            <p class="project-caption">AI-assisted digital illustrations, symbols, and iconography designed for interactive iGaming interfaces</p>
             <div class="igaming-gallery">
                 <button class="clothing-image-button" type="button">
                     <img src="High_Value_Amulet.png" alt="High-value amulet icon with a jeweled red heart and bat wings">
@@ -379,16 +435,16 @@
                     <img src="Royals.png" alt="Stylized royal playing-card letters A, K, Q, and J">
                 </button>
             </div>
-            <p class="project-caption">A collection of custom <strong>Gothic-themed reel symbols</strong> designed for a dark iGaming slot machine</p>
         </section>
     </main>
     <nav class="page-indicators" aria-label="Page navigation">
         <a class="page-indicator" href="#intro-section" aria-label="Introduction" aria-current="page"></a>
+        <a class="page-indicator" href="#commercial-beauty-section" aria-label="Commercial Beauty"></a>
         <a class="page-indicator" href="#product-section" aria-label="Product Visualization"></a>
         <a class="page-indicator" href="#jacket-section" aria-label="Jacket"></a>
         <a class="page-indicator" href="#red-jacket-section" aria-label="Red jacket project"></a>
-        <a class="page-indicator" href="#clothing-section" aria-label="Clothing"></a>
-        <a class="page-indicator" href="#igaming-section" aria-label="Icons"></a>
+        <a class="page-indicator" href="#clothing-section" aria-label="Fashion &amp; Apparel"></a>
+        <a class="page-indicator" href="#igaming-section" aria-label="Gaming &amp; UI"></a>
     </nav>
     <dialog class="image-dialog" aria-label="Enlarged project image">
         <button class="image-dialog-close" type="button">Close</button>
